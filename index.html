@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="media-queries.css">
+    <title>Check Yo' Self!</title>
+  </head>
+  <body>
+    <header>
+      <h1>CHECK <span id="color-accent">YO'</span> SELF</h1>
+      <input type="search" id="header-search-input">
+    </header>
+      <aside>
+        <form>
+          <label for="task-title-input">
+            Task Title
+          </label>
+          <input type="text" class="aside-item" id="task-title-input">
+          <label for="task-item-input">
+            Task Item
+          </label>
+          <input type="text" class="aside-item" id="task-item-input">
+          <button class="aside-item aside-button">Make Task List</button>
+          <button class="aside-item aside-button">Clear All</button>
+        </form>
+      <button class="aside-item aside-button" id="aside-urgency-button">Filter By Urgency</button>
+    </aside>
+  <main>
+    <article>
+      <h3>${task-title}</h3>
+      <p>${task-item}</p>
+    </article>
+  </main>
+</body>
+</html>

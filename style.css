@@ -1,0 +1,79 @@
+HTML {
+	height: 100%;    
+}
+* {
+  box-sizing: border-box;
+  font-family: "open sans", sans-serif; 
+}
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+	padding: 0px;
+  display: grid;
+  grid-template-columns: 25% 75%;
+  grid-template-rows: 15% 85%;
+}
+header {
+  border: 1px solid;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0B0F43;
+}
+h1 {
+  color: #FEFEFE;
+  font-size: 32px;
+  margin-left: 12px;
+}
+#header-search-input {
+  margin-right: 15px;
+}
+#color-accent {
+  color: #FEC200;
+}
+aside {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  background-color: #47869A;
+}
+.aside-item {
+  height: 35px;
+}
+.aside-button {
+  background-color: #0B0F43;
+  color: white;
+  font-weight: bold;
+  border: 0;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 60%;
+  width: 90%;
+}
+#task-title-input {
+  height: 35px;
+}
+#task-item-input {
+  height: 35px;
+}
+#aside-urgency-button {
+  width: 90%;
+}
+main {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  background-color: #F7FCFC;
+}
