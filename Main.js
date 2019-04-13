@@ -11,6 +11,11 @@ var urgencyFilterBtn = document.querySelector('#aside--urgency-btn');
 var menuForm = document.querySelector('#aside-form');
 
 
+function reinstantiateItems(i) {
+  return new Task(toDoStorage[i].title, toDoStorage[i].task, 
+  toDoStorage[i].id, toDoStorage[i].urgent)
+}
+
 function addItem() {
   e.preventDefault();
   var id = Date.now();
