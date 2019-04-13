@@ -30,11 +30,11 @@ h1 {
   font-size: 34px;
   margin-left: 10px;
 }
-#header-search-input {
+#header--search {
   margin-right: 15px;
   width: 25%;
 }
-#color-accent {
+.header--h1-accent {
   color: #FEC200;
 }
 aside {
@@ -66,26 +66,26 @@ aside {
 #submit-task.enable {
   background-color: rgb(31, 35, 102);
 }
-#menu-input-container1 {
+aside--form--container1 {
   display: flex;
   flex-direction: column;
   min-height: 60px;
 }
-#menu-input-submit-box {
+#aside--form--container3 {
   display: flex;
   align-items: flex-end;
   height: 45px;
   width: 100%;
 }
-.menu-submit-btn {
+.aside--form--submit-btn {
   height: 45px;
 }
-#menu-input-container2 {
+#aside--form--container2 {
   display: flex;
   flex-direction: column;
   height: 60px;
 }
-#menu-task-item-container {
+#aside--staging {
   width: 100%;
   min-height: 10px;
   max-height: 350px;
@@ -100,7 +100,7 @@ form {
   width: 90%;
   border-bottom: 1px solid #0B0F43;
 }
-#menu-urgency-button {
+#aside--urgency-btn {
   width: 90%;
   margin-top: 35px;
 }
