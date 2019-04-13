@@ -1,4 +1,4 @@
-class ToDoList {
+class Task {
   constructor(title, tasks, id, urgent) {
     this.title = title;
     this.tasks = [];
@@ -21,8 +21,3 @@ class ToDoList {
   };
 };
 
-function retrieveIdea() {
-  toDoStorage.forEach(function(idea){
-    modifyStar(idea);
-    });
-  };

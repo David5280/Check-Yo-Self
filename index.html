@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="media-queries.css">
     <title>Check Yo' Self!</title>
   </head>
   <body>
@@ -14,26 +13,32 @@
       <input type="search" id="header-search-input">
     </header>
       <aside>
-        <form>
-          <label for="task-title-input">
-            Task Title
-          </label>
-          <input type="text" class="aside-item" id="task-title-input">
-          <label for="task-item-input">
-            Task Item
-          </label>
-          <input type="text" class="aside-item" id="task-item-input">
-          <button class="aside-item aside-button">Make Task List</button>
-          <button class="aside-item aside-button">Clear All</button>
+        <form id="menu-form">
+          <div id="menu-input-container1">
+            <label for="task-title-input">
+              Task Title
+            </label>
+            <input type="text" class="aside-item" id="task-title-input">
+          </div>
+            <div id="menu-task-item-container">
+              <p id="menu-task-item-staging">Any items for your To Do?</p>
+            </div>
+          <div id="menu-input-container2">
+            <label for="task-item-input">
+              Task Item
+            </label>
+            <div id="menu-input-submit-box">
+              <input type="text" class="aside-item" id="task-item-input">
+              <input type="image" src="images/addTaskBtn.png" class="menu-submit-btn" alt="submit button">
+            </div>
+          </div>
+          <button class="aside-item aside-button" id="submit-task" disabled="">Make Task List</button>
+          <button class="aside-item aside-button" id="#menu-clear-all-btn">Clear All</button>
         </form>
-      <button class="aside-item aside-button" id="aside-urgency-button">Filter By Urgency</button>
+      <button class="aside-item aside-button" id="menu-urgency-button">Filter By Urgency</button>
     </aside>
   <main>
-    <article class="task-card">
-      <h3>
-
-      </h3>
-    </article>
   </main>
+  <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
