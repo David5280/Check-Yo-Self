@@ -28,17 +28,35 @@
               Task Item
             </label>
             <div id='aside--form--container3'>
-              <input type='text' class='aside-item' id='aside---form--task'>
+              <input type='text' class='aside-item' id='aside--form--task'>
               <input type='image' src='images/addTaskBtn.png' class='aside--form--submit-btn' alt='submit button'>
             </div>
           </div>
-          <button class='aside-item aside-button' id='aside--form--submit-task' disabled="">Make Task List</button>
+          <button class='aside-item aside-button' id='aside--form--submit-task' >Make Task List</button>
           <button class='aside-item aside-button' id='#aside--form--clear-btn'>Clear All</button>
         </form>
       <button class='aside-item aside-button' id='aside--urgency-btn'>Filter By Urgency</button>
     </aside>
-  <main>
+  <main id='main--card-display'>
+      <article class='main--article--card' data-id='main--article--card${task.id}'
+    <section class='main--card--top'>
+      <h3 class='main--card--title'>${task.title}</h3>
+     </section>
+        <ul class='main--card--list' id='main--card${task.id}'
+       </ul>
+     <section class='main--card--bottom'>
+        <div class='main--card--urgent'>
+          <input type='image' src='images/urgent.svg' class='main--card--btn' id='main--card--urgent-btn'>
+          <p class='main--card--urgent-text>URGENT</p>
+        </div>
+        <div class='main--card--delete'>
+          <input type='image' src='images/delete.svg' class='main--card--btn' id='main--card--delete-btn'>
+         <p class='main--card--delete-text'>DELETE</p>
+        </div>
+      </section>
+    </article>
   </main>
+  <script type='text/javascript' src='ToDo-List.js'></script>
   <script type='text/javascript' src='main.js'></script>
 </body>
 </html>
