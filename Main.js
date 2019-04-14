@@ -18,21 +18,69 @@ menuForm.addEventListener('click', function(e) {
   if (e.target.className === 'aside--form--submit-btn') {
     e.preventDefault();
     addItem(e);
-    console.log('staged');
   }
   if (e.target.id === 'aside--form--submit-task') {
     e.preventDefault();
     console.log('gen card');
     instantiateTask(e);
   }
+  if (e.target.className === 'stage-list-delete') {
+    e.target.closest('.aside--staged-item').remove();
+  }
 });
 
 displayBox.addEventListener('click', function(e) {
   if (e.target.id === 'main--card--delete-btn') {
     e.target.closest('.main--article--card').remove();
-    makeDeleteArray(event);
+    deleteList(e);
   }
-})
+});
+
+function addItem(e) {
+  event.preventDefault();
+  var id = Date.now();
+  addTaskToObj(id);
+  stageItem(id);
+};
+
+function stageItem(id) {
+  var listItem = `
+  <li class='aside--staged-item' data-id='${id}' id='${id}'>
+    <input type='image' src='images/delete.svg' class='stage-list-delete'>
+    <p class='stage-content'>${taskBody.value}</p>
+  </li>`
+  taskItemPreview.insertAdjacentHTML('beforeend', listItem);
+};
+
+function addTaskToObj(id) {
+  var taskObj = {
+    content: `${taskBody.value}`,
+    id: `${id}`,
+  }
+  taskItems.push(taskObj);
+  console.log(taskObj);
+  console.log(taskItems);
+}
+
+function instantiateTask(e) {
+  e.preventDefault();
+  // var taskContent = `
+  // <ul class='main--card--content'>
+  //   ${}`
+  var task = new Task(taskTitle.value, taskItems);
+  toDoStorage.push(task);
+  console.log(task.tasks);
+  genCard(task);
+}
+
+function deleteList(e) {
+  toDoStorage.forEach(function(list, index) {
+    var listItems = reinstantiateItems(index);
+    if(parseInt(e.target.closest('.main--article--card').id) == list.id) {
+      listItems.deleteFromStorage(index);
+    };
+  });
+};
 
 function checkInputFields() {
 	if (taskBody.value !== '') {
@@ -44,27 +92,16 @@ function checkInputFields() {
 	};
 };
 
-function instantiateTask(e) {
-  e.preventDefault();
-  var task = new Task(taskTitle.value, taskBody.value, Date.now());
-  toDoStorage.push(task);
-  task.saveToStorage(toDoStorage);
-  console.log(toDoStorage);
-  genCard(task);
+function populateCard(task) {
+  forEach(function () {
+
+  })
 }
 
-function reinstantiateItems(e) {
+function reinstantiateItems(i) {
   console.log('wtff');
   return new Task(toDoStorage[i].title, toDoStorage[i].task, 
   toDoStorage[i].id, toDoStorage[i].urgent);
-};
-
-function addItem() {
-  event.preventDefault();
-  var id = Date.now();
-  stageItem(id);
-  addToObj(id);
-  // validateInput();
 };
 
 function retrieveList(list) {
@@ -75,21 +112,12 @@ function retrieveList(list) {
     });
   };
 
-function stageItem(id) {
-  var listItem = `
-  <li class='aside--staged-item' data-id='${id}' id='${id}'>
-    <input type='image' src='images/delete.svg' class='stage-list-delete'>
-    <p class='stage-content'>${taskBody.value}</p>
-  </li>`
-  taskItemPreview.insertAdjacentHTML('beforeend', listItem);
-};
-
 function addToObj(id) {
   var taskObj = {
     title: `${taskTitle.value}`,
     content: `${taskBody.value}`,
     id: `${id}`,
-    urgent: false
+    done: false
   }
   taskItems.push(taskObj);
 }

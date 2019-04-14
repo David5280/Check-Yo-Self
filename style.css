@@ -101,9 +101,10 @@ aside {
 .aside--staged-item {
   display: flex;
   flex-direction: row;
+  font-size: 24px;
 }
 .stage-list-delete {
-  height: 20px;
+  height: 25px;
   align-self: center;
 }
 #aside-form {
