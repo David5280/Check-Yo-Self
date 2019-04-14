@@ -31,6 +31,8 @@ menuForm.addEventListener('click', function(e) {
     e.preventDefault();
     console.log('input');
     instantiateTask(e);
+    taskItems = [];
+    clearForm();
   }
   if (e.target.className === 'stage-list-delete') {
     e.target.closest('.aside--staged-item').remove();
@@ -50,8 +52,11 @@ function addItem(e) {
   addTaskToObj(id);
   stageItem(id);
   getAllTasks();
-
 };
+
+function clearForm() {
+  taskItemPreview.innerHTML ='';
+}
 
 function stageItem(id) {
   var listItem = `
@@ -81,14 +86,13 @@ function instantiateTask(e) {
 }
 
 function deleteList(e) {
-  toDoStorage.forEach(function(list, index) {
-    var listItems = reinstantiateItems(index);
-    if(parseInt(e.target.closest('.main--article--card').id) == list.id) {
-      listItems.deleteFromStorage(index);
-    };
-  });
+  if (e.target.id === 'main--card--delete-btn') {
+    e.target.closest('.main--article--card').remove();
+    var removedTask = new Task();
+    var targetId = parseInt(e.target.closest('.main--article--card').dataset.id);
+    removedTask.deleteFromStorage(targetId);
+  }
 };
-
 function reinstantiateItems(i) {
   console.log('wtff');
   return new Task(toDoStorage[i].title, toDoStorage[i].task, 
@@ -107,7 +111,7 @@ function reinstantiateItems(i) {
 
 function genCard(task) {
   var card = `
-  <article class='main--article--card' data-id='main--article--card${task.id}'>
+  <article class='main--article--card' data-id=${task.id}'>
     <section class='main--card--top'>
       <h3 class='main--card--title'>${task.title}</h3>
     </section>
