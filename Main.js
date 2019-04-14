@@ -12,7 +12,8 @@ var menuForm = document.querySelector('#aside-form');
 var displayBox = document.querySelector('#main--card-display');
 var stagingArea = document.querySelector('.aside--staging');
 
-window.addEventListener('pageload', retrieveList);
+window.addEventListener('load', retrieveList);
+taskTitle.addEventListener('keyup', checkInputFields)
 
 menuForm.addEventListener('click', function(e) {
   if (e.target.className === 'aside--form--submit-btn') {
@@ -21,7 +22,7 @@ menuForm.addEventListener('click', function(e) {
   }
   if (e.target.id === 'aside--form--submit-task') {
     e.preventDefault();
-    console.log('gen card');
+    console.log('input');
     instantiateTask(e);
   }
   if (e.target.className === 'stage-list-delete') {
@@ -37,10 +38,12 @@ displayBox.addEventListener('click', function(e) {
 });
 
 function addItem(e) {
-  event.preventDefault();
+  e.preventDefault();
   var id = Date.now();
   addTaskToObj(id);
   stageItem(id);
+  getAllTasks();
+
 };
 
 function stageItem(id) {
@@ -58,8 +61,6 @@ function addTaskToObj(id) {
     id: `${id}`,
   }
   taskItems.push(taskObj);
-  console.log(taskObj);
-  console.log(taskItems);
 }
 
 function instantiateTask(e) {
@@ -70,6 +71,7 @@ function instantiateTask(e) {
   var task = new Task(taskTitle.value, taskItems);
   toDoStorage.push(task);
   console.log(task.tasks);
+  task.saveToStorage(toDoStorage); 
   genCard(task);
 }
 
@@ -83,20 +85,14 @@ function deleteList(e) {
 };
 
 function checkInputFields() {
-	if (taskBody.value !== '') {
-    taskSubmitBtn.disabled = false;
-    taskSubmitBtn.classList.add('enable');
+	if (taskBody.value !== '' && taskItems.length > 0) {
+    submitTaskBtn.disabled = false;
+    submitTaskBtn.classList.add('enable');
 	} else {
-    taskSubmitBtn.disabled = true;
-    taskSubmitBtn.classList.remove('enable');
+    submitTaskBtn.disabled = true;
+    submitTaskBtn.classList.remove('enable');
 	};
 };
-
-function populateCard(task) {
-  forEach(function () {
-
-  })
-}
 
 function reinstantiateItems(i) {
   console.log('wtff');
@@ -105,22 +101,28 @@ function reinstantiateItems(i) {
 };
 
 function retrieveList(list) {
-  toDoStorage.forEach(function(list){
-    modifyStar(idea);
-    togglePrompt();
-    genCard(list);
-    });
+  toDoStorage = toDoStorage.map(function (oldList) {
+    var restoredList = new Task(oldList.title, oldList.tasks, oldList.id, oldList.urgent);
+    genCard(restoredList);
+  })
+
+
   };
 
-function addToObj(id) {
-  var taskObj = {
-    title: `${taskTitle.value}`,
-    content: `${taskBody.value}`,
-    id: `${id}`,
-    done: false
-  }
-  taskItems.push(taskObj);
+  function pageLoadFunc() {
+  retrieveList();
+  reinstantiateItems()
 }
+
+// function addToObj(id) {
+//   var taskObj = {
+//     title: `${taskTitle.value}`,
+//     content: `${taskBody.value}`,
+//     id: `${id}`,
+//     done: false
+//   }
+//   taskItems.push(taskObj);
+// }
 
 function genCard(task) {
   var card = `
@@ -130,6 +132,7 @@ function genCard(task) {
     </section>
     <section class='main--card--body'>
       <ul class='main--card--list' id='main--card${task.id}'></ul>
+      ${getAllTasks(task)}
       </ul>
     </section>
     <section class='main--card--bottom'>
@@ -144,5 +147,17 @@ function genCard(task) {
     </section>
   </article>`
   displayBox.insertAdjacentHTML('afterbegin', card);
+
 };
  
+function getAllTasks(stringItems) {
+  var toDoString = '';
+  for (var i = 0; i < stringItems.tasks.length; i++) {
+    toDoString += `
+    <p class = 'listItemsAppend'>
+      <input type='image' class='card--check--icon' src='images/checkbox.svg' alt='checkbox' data-id=${stringItems.tasks.id} id ='index [i]'/>
+      <p class='typed-to-do'>${stringItems.tasks[i].content}</p>
+    </p>`
+  }
+  return toDoString;
+}

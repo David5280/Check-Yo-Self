@@ -102,6 +102,7 @@ aside {
   display: flex;
   flex-direction: row;
   font-size: 24px;
+  padding: 5px 0;
 }
 .stage-list-delete {
   height: 25px;
@@ -131,9 +132,9 @@ main {
 }
 .main--article--card {
   border: 2px solid;
-	height: 300px;
+	height: 250px;
 	margin: 10px 15px;
-  min-width: 30%;
+  min-width: 32%;
 }
 .main--card--urgent {
   width: 20%;
@@ -176,8 +177,14 @@ p {
   height: 25px;
   width: 25px;
 }
+.card--check--icon {
+  height: 25px;
+}
 .enable {
   background-color: green;
+}
+.listItemsAppend {
+  width: 10%;
 }
 .hide {
   display: none;
