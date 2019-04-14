@@ -12,7 +12,7 @@ var menuForm = document.querySelector('#aside-form');
 var displayBox = document.querySelector('#main--card-display');
 var stagingArea = document.querySelector('.aside--staging');
 
-
+window.addEventListener('pageload', retrieveList);
 
 menuForm.addEventListener('click', function(e) {
   if (e.target.className === 'aside--form--submit-btn') {
@@ -26,6 +26,13 @@ menuForm.addEventListener('click', function(e) {
     instantiateTask(e);
   }
 });
+
+displayBox.addEventListener('click', function(e) {
+  if (e.target.id === 'main--card--delete-btn') {
+    e.target.closest('.main--article--card').remove();
+    makeDeleteArray(event);
+  }
+})
 
 function checkInputFields() {
 	if (taskBody.value !== '') {
@@ -42,12 +49,14 @@ function instantiateTask(e) {
   var task = new Task(taskTitle.value, taskBody.value, Date.now());
   toDoStorage.push(task);
   task.saveToStorage(toDoStorage);
+  console.log(toDoStorage);
   genCard(task);
 }
 
-function reinstantiateItems(i) {
+function reinstantiateItems(e) {
+  console.log('wtff');
   return new Task(toDoStorage[i].title, toDoStorage[i].task, 
-  toDoStorage[i].id, toDoStorage[i].urgent)
+  toDoStorage[i].id, toDoStorage[i].urgent);
 };
 
 function addItem() {
@@ -57,6 +66,14 @@ function addItem() {
   addToObj(id);
   // validateInput();
 };
+
+function retrieveList(list) {
+  toDoStorage.forEach(function(list){
+    modifyStar(idea);
+    togglePrompt();
+    genCard(list);
+    });
+  };
 
 function stageItem(id) {
   var listItem = `
@@ -68,14 +85,13 @@ function stageItem(id) {
 };
 
 function addToObj(id) {
-  var tasks = []
   var taskObj = {
+    title: `${taskTitle.value}`,
     content: `${taskBody.value}`,
     id: `${id}`,
+    urgent: false
   }
-  tasks.push(taskObj);
-  console.log('add to object');
-  console.log(tasks);
+  taskItems.push(taskObj);
 }
 
 function genCard(task) {
