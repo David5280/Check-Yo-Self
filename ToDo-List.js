@@ -1,9 +1,9 @@
 class Task {
   constructor(title, task, id, urgent) {
     this.title = title;
-    this.tasks = [];
+    this.tasks = task || [];
     this.id = id;
-    this.urgent = false;
+    this.urgent = urgent || false;
   };
 
   saveToStorage(toDoStorage) {

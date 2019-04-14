@@ -12,50 +12,35 @@ var menuForm = document.querySelector('#aside-form');
 var displayBox = document.querySelector('#main--card-display');
 var stagingArea = document.querySelector('.aside--staging');
 
-
+window.addEventListener('pageload', retrieveList);
 
 menuForm.addEventListener('click', function(e) {
   if (e.target.className === 'aside--form--submit-btn') {
     e.preventDefault();
     addItem(e);
-    console.log('staged');
   }
   if (e.target.id === 'aside--form--submit-task') {
     e.preventDefault();
     console.log('gen card');
     instantiateTask(e);
   }
+  if (e.target.className === 'stage-list-delete') {
+    e.target.closest('.aside--staged-item').remove();
+  }
 });
 
-function checkInputFields() {
-	if (taskBody.value !== '') {
-    taskSubmitBtn.disabled = false;
-    taskSubmitBtn.classList.add('enable');
-	} else {
-    taskSubmitBtn.disabled = true;
-    taskSubmitBtn.classList.remove('enable');
-	};
-};
+displayBox.addEventListener('click', function(e) {
+  if (e.target.id === 'main--card--delete-btn') {
+    e.target.closest('.main--article--card').remove();
+    deleteList(e);
+  }
+});
 
-function instantiateTask(e) {
-  e.preventDefault();
-  var task = new Task(taskTitle.value, taskBody.value, Date.now());
-  toDoStorage.push(task);
-  task.saveToStorage(toDoStorage);
-  genCard(task);
-}
-
-function reinstantiateItems(i) {
-  return new Task(toDoStorage[i].title, toDoStorage[i].task, 
-  toDoStorage[i].id, toDoStorage[i].urgent)
-};
-
-function addItem() {
+function addItem(e) {
   event.preventDefault();
   var id = Date.now();
+  addTaskToObj(id);
   stageItem(id);
-  addToObj(id);
-  // validateInput();
 };
 
 function stageItem(id) {
@@ -67,15 +52,74 @@ function stageItem(id) {
   taskItemPreview.insertAdjacentHTML('beforeend', listItem);
 };
 
-function addToObj(id) {
-  var tasks = []
+function addTaskToObj(id) {
   var taskObj = {
     content: `${taskBody.value}`,
     id: `${id}`,
   }
-  tasks.push(taskObj);
-  console.log('add to object');
-  console.log(tasks);
+  taskItems.push(taskObj);
+  console.log(taskObj);
+  console.log(taskItems);
+}
+
+function instantiateTask(e) {
+  e.preventDefault();
+  // var taskContent = `
+  // <ul class='main--card--content'>
+  //   ${}`
+  var task = new Task(taskTitle.value, taskItems);
+  toDoStorage.push(task);
+  console.log(task.tasks);
+  genCard(task);
+}
+
+function deleteList(e) {
+  toDoStorage.forEach(function(list, index) {
+    var listItems = reinstantiateItems(index);
+    if(parseInt(e.target.closest('.main--article--card').id) == list.id) {
+      listItems.deleteFromStorage(index);
+    };
+  });
+};
+
+function checkInputFields() {
+	if (taskBody.value !== '') {
+    taskSubmitBtn.disabled = false;
+    taskSubmitBtn.classList.add('enable');
+	} else {
+    taskSubmitBtn.disabled = true;
+    taskSubmitBtn.classList.remove('enable');
+	};
+};
+
+function populateCard(task) {
+  forEach(function () {
+
+  })
+}
+
+function reinstantiateItems(i) {
+  console.log('wtff');
+  return new Task(toDoStorage[i].title, toDoStorage[i].task, 
+  toDoStorage[i].id, toDoStorage[i].urgent);
+};
+
+function retrieveList(list) {
+  toDoStorage.forEach(function(list){
+    modifyStar(idea);
+    togglePrompt();
+    genCard(list);
+    });
+  };
+
+function addToObj(id) {
+  var taskObj = {
+    title: `${taskTitle.value}`,
+    content: `${taskBody.value}`,
+    id: `${id}`,
+    done: false
+  }
+  taskItems.push(taskObj);
 }
 
 function genCard(task) {
