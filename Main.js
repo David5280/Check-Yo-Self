@@ -13,7 +13,14 @@ var displayBox = document.querySelector('#main--card-display');
 var stagingArea = document.querySelector('.aside--staging');
 
 window.addEventListener('load', retrieveList);
-taskTitle.addEventListener('keyup', checkInputFields)
+
+function retrieveList() {
+  toDoStorage = toDoStorage.map(function (oldList) {
+    var restoredList = new Task(oldList.title, oldList.tasks, oldList.id, oldList.urgent);
+    genCard(restoredList);
+    return restoredList;
+  });
+};
 
 menuForm.addEventListener('click', function(e) {
   if (e.target.className === 'aside--form--submit-btn') {
@@ -38,7 +45,7 @@ displayBox.addEventListener('click', function(e) {
 });
 
 function addItem(e) {
-  e.preventDefault();
+  event.preventDefault();
   var id = Date.now();
   addTaskToObj(id);
   stageItem(id);
@@ -61,16 +68,14 @@ function addTaskToObj(id) {
     id: `${id}`,
   }
   taskItems.push(taskObj);
+  console.log(taskObj);
+  console.log(taskItems);
 }
 
 function instantiateTask(e) {
   e.preventDefault();
-  // var taskContent = `
-  // <ul class='main--card--content'>
-  //   ${}`
   var task = new Task(taskTitle.value, taskItems);
   toDoStorage.push(task);
-  console.log(task.tasks);
   task.saveToStorage(toDoStorage); 
   genCard(task);
 }
@@ -84,35 +89,11 @@ function deleteList(e) {
   });
 };
 
-function checkInputFields() {
-	if (taskBody.value !== '' && taskItems.length > 0) {
-    submitTaskBtn.disabled = false;
-    submitTaskBtn.classList.add('enable');
-	} else {
-    submitTaskBtn.disabled = true;
-    submitTaskBtn.classList.remove('enable');
-	};
-};
-
 function reinstantiateItems(i) {
   console.log('wtff');
   return new Task(toDoStorage[i].title, toDoStorage[i].task, 
   toDoStorage[i].id, toDoStorage[i].urgent);
 };
-
-function retrieveList(list) {
-  toDoStorage = toDoStorage.map(function (oldList) {
-    var restoredList = new Task(oldList.title, oldList.tasks, oldList.id, oldList.urgent);
-    genCard(restoredList);
-  })
-
-
-  };
-
-  function pageLoadFunc() {
-  retrieveList();
-  reinstantiateItems()
-}
 
 // function addToObj(id) {
 //   var taskObj = {
@@ -148,7 +129,7 @@ function genCard(task) {
   </article>`
   displayBox.insertAdjacentHTML('afterbegin', card);
 
-};
+}; 
  
 function getAllTasks(stringItems) {
   var toDoString = '';
@@ -160,4 +141,5 @@ function getAllTasks(stringItems) {
     </p>`
   }
   return toDoString;
-}
+} 
+   
