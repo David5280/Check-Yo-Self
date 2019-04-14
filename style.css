@@ -12,7 +12,7 @@ body {
 	padding: 0px;
   display: grid;
   grid-template-columns: 25% 75%;
-  grid-template-rows: 15% 85%;
+  grid-template-rows: 10% 90%;
 }
 header {
   border: 1px solid;
@@ -59,6 +59,7 @@ aside {
   color: white;
   font-weight: bold;
   border: 2px solid rgb(0, 0, 0);
+  margin-top: 10px;
 }
 .aside-button:hover {
   background-color: #47869A;
@@ -66,19 +67,22 @@ aside {
 #submit-task.enable {
   background-color: rgb(31, 35, 102);
 }
-aside--form--container1 {
+#aside--form--container1 {
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
   min-height: 60px;
 }
 #aside--form--container3 {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   height: 45px;
   width: 100%;
+  margin-top: auto;
 }
 .aside--form--submit-btn {
   height: 45px;
+  width: 45px;
 }
 #aside--form--container2 {
   display: flex;
@@ -90,9 +94,19 @@ aside--form--container1 {
   min-height: 10px;
   max-height: 350px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  overflow: auto;
+  list-style: none;
 }
-form {
+.aside--staged-item {
+  display: flex;
+  flex-direction: row;
+}
+.stage-list-delete {
+  height: 20px;
+  align-self: center;
+}
+#aside-form {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -102,10 +116,68 @@ form {
 }
 #aside--urgency-btn {
   width: 90%;
-  margin-top: 35px;
+  margin: 35px 0px;
 }
 main {
   grid-column-start: 2;
   grid-column-end: 3;
   background-color: #F7FCFC;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+  overflow: auto;
+}
+.main--article--card {
+  border: 2px solid;
+	height: 300px;
+	margin: 10px 15px;
+  min-width: 30%;
+}
+.main--card--urgent {
+  width: 20%;
+}
+ul {
+  padding: 0px;
+}
+.main--card--title {
+  grid-row-start: 1;
+  grid-row-end: 2;
+	display: flex;
+	height: 25px;
+	justify-self: flex-start;
+	width: 100%;
+}
+h3 {
+  margin: 0px;
+}
+p {
+  margin: 0px;
+}
+.main--card--body {
+  height: 70%;
+  width: 100%;
+}
+.main--card--bottom {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.main--card--icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+.main--card--btn {
+  height: 25px;
+  width: 25px;
+}
+.enable {
+  background-color: green;
+}
+.hide {
+  display: none;
 }
