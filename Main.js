@@ -10,6 +10,9 @@ var clearAllBtn = document.querySelector('#aside--form--clear-btn');
 var urgencyFilterBtn = document.querySelector('#aside--urgency-btn');
 var menuForm = document.querySelector('#aside-form');
 var displayBox = document.querySelector('#main--card-display');
+var stagingArea = document.querySelector('.aside--staging');
+
+
 
 menuForm.addEventListener('click', function(e) {
   if (e.target.className === 'aside--form--submit-btn') {
@@ -20,7 +23,7 @@ menuForm.addEventListener('click', function(e) {
   if (e.target.id === 'aside--form--submit-task') {
     e.preventDefault();
     console.log('gen card');
-    instantiateTask();
+    instantiateTask(e);
   }
 });
 
@@ -34,23 +37,12 @@ function checkInputFields() {
 	};
 };
 
-function stageItem(id) {
-  var listItem = `
-  <li class='aside--staged-item' data-id='${id}' id='${id}'>
-    <input type='image' src='images/delete.svg' class='stage-list-delete'>
-    <p class='stage-content'>${taskBody.value}</p>
-  </li>`
-  taskItemPreview.insertAdjacentHTML('beforeend', listItem);
-};
-
 function instantiateTask(e) {
-  event.preventDefault();
+  e.preventDefault();
   var task = new Task(taskTitle.value, taskBody.value, Date.now());
   toDoStorage.push(task);
   task.saveToStorage(toDoStorage);
   genCard(task);
-  // genCardItems(task);
-  console.log('initiate');
 }
 
 function reinstantiateItems(i) {
@@ -65,29 +57,45 @@ function addItem() {
   addToObj(id);
   // validateInput();
 };
+
+function stageItem(id) {
+  var listItem = `
+  <li class='aside--staged-item' data-id='${id}' id='${id}'>
+    <input type='image' src='images/delete.svg' class='stage-list-delete'>
+    <p class='stage-content'>${taskBody.value}</p>
+  </li>`
+  taskItemPreview.insertAdjacentHTML('beforeend', listItem);
+};
+
 function addToObj(id) {
+  var tasks = []
   var taskObj = {
-    content: `${taskBody}`,
+    content: `${taskBody.value}`,
     id: `${id}`,
   }
+  tasks.push(taskObj);
+  console.log('add to object');
+  console.log(tasks);
 }
 
 function genCard(task) {
   var card = `
-  <article class='main--article--card' data-id='main--article--card${task.id}'
+  <article class='main--article--card' data-id='main--article--card${task.id}'>
     <section class='main--card--top'>
       <h3 class='main--card--title'>${task.title}</h3>
-     </section>
-        <ul class='main--card--list' id='main--card${task.id}'
-       </ul>
-     <section class='main--card--bottom'>
-        <div class='main--card--urgent'>
-          <input type='image' src='images/urgent.svg' class='main--card--btn' id='main--card--urgent-btn'>
-          <p class='main--card--urgent-text>URGENT</p>
-        </div>
-        <div class='main--card--delete'>
-          <input type='image' src='images/delete.svg' class='main--card--btn' id='main--card--delete-btn'>
-         <p class='main--card--delete-text'>DELETE</p>
+    </section>
+    <section class='main--card--body'>
+      <ul class='main--card--list' id='main--card${task.id}'></ul>
+      </ul>
+    </section>
+    <section class='main--card--bottom'>
+      <div class='main--card--icon-container'>
+        <input type='image' src='images/urgent.svg' class='main--card--btn card-btn' id='main--card--urgent-btn'>
+        <p class='main--card--text'>URGENT</p>
+      </div>
+      <div class='main--card--icon-container'>
+        <input type='image' src='images/delete.svg' class='main--card--btn card-btn' id='main--card--delete-btn'>
+        <p class='main--card--text'>DELETE</p>
       </div>
     </section>
   </article>`
