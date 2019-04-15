@@ -11,7 +11,7 @@
     <header>
       <!-- <form class='header--form'> -->
         <h1>CHECK <span class='header--h1-accent'>YO'</span> SELF</h1>
-        <input type="search" id="header--search">
+        <input type='search' id='header--search'>
       <!-- </form> -->
     </header>
       <aside>
@@ -30,15 +30,16 @@
             </label>
             <div id='aside--form--container3'>
               <input type='text' class='aside-item' id='aside--form--task'>
-              <input type='image' src='images/addTaskBtn.png' class='aside--form--submit-btn' alt='submit button'>
+              <input type='image' src='images/addTaskBtn.png' class='aside--form--submit-btn' alt='submit button' disabled>
             </div>
           </div>
-          <button class='aside-item aside-button' id='aside--form--submit-task'>Make Task List</button>
+          <button class='aside-item aside-button' id='aside--form--submit-task' disabled=''>Make Task List</button>
           <button class='aside-item aside-button' id='#aside--form--clear-btn'>Clear All</button>
         </form>
       <button class='aside-item aside-button' id='aside--urgency-btn'>Filter By Urgency</button>
     </aside>
   <main id='main--card-display'>
+    <p class='initialPrompt'>Let me keep track of your tasks!</p>
   </main>
   <script type='text/javascript' src='ToDo-List.js'></script>
   <script type='text/javascript' src='main.js'></script>

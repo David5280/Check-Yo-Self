@@ -4,13 +4,14 @@ var searchInput = document.querySelector('#header--search')
 var taskTitle = document.querySelector('#aside--form--title');
 var taskBody = document.querySelector('#aside--form--task');
 var taskSubmitBtn = document.querySelector('.aside--form--submit-btn');
-var submitTaskBtn = document.querySelector('#aside--form--submit-task')
+var submitTasksBtn = document.querySelector('#aside--form--submit-task')
 var taskItemPreview = document.querySelector('#aside--staging');
 var clearAllBtn = document.querySelector('#aside--form--clear-btn');
 var urgencyFilterBtn = document.querySelector('#aside--urgency-btn');
 var menuForm = document.querySelector('#aside-form');
 var displayBox = document.querySelector('#main--card-display');
 var stagingArea = document.querySelector('.aside--staging');
+var prompt = document.querySelector('.initialPrompt');
 
 window.addEventListener('load', retrieveList);
 
@@ -18,31 +19,51 @@ function retrieveList() {
   toDoStorage = toDoStorage.map(function (oldList) {
     var restoredList = new Task(oldList.title, oldList.tasks, oldList.id, oldList.urgent);
     genCard(restoredList);
+    checkStorage();
     return restoredList;
   });
 };
 
+menuForm.addEventListener('keyup', function(e) {
+  if (e.target.id === 'aside--form--task') {
+    checkTaskBody();
+    checkInputFields();
+  }
+  if (e.target.id === 'aside--form--title') {
+    checkInputFields();
+  }
+});
+
+
 menuForm.addEventListener('click', function(e) {
   if (e.target.className === 'aside--form--submit-btn') {
     e.preventDefault();
-    addItem(e);
+    addItem();
+    checkStorage();
   }
   if (e.target.id === 'aside--form--submit-task') {
     e.preventDefault();
-    console.log('input');
     instantiateTask(e);
     taskItems = [];
+    checkInputFields(e);
     clearForm();
+    checkStorage();
   }
   if (e.target.className === 'stage-list-delete') {
+    e.preventDefault();
     e.target.closest('.aside--staged-item').remove();
-    
   }
   if (e.target.className === '.clearAllBtn') {
+    e.preventDefault();
     clearForm();
     menuForm.reset();
   }
 });
+
+
+
+
+
 
 displayBox.addEventListener('click', function(e) {
   if (e.target.id === 'main--card--delete-btn') {
@@ -51,16 +72,45 @@ displayBox.addEventListener('click', function(e) {
   }
 });
 
+function checkTaskBody() {
+  if (taskBody.value !== '') {
+    taskSubmitBtn.disabled = false;
+    // taskSubmitBtnclassList.add('enable');
+  }
+  if (taskBody.value === '') {
+    taskSubmitBtn.disabled = true;
+    // taskSubmitBtnclassList.remove('enable'); 
+  }
+}
+
+function checkInputFields() {
+	if (taskTitle.value !== '' && taskItems.length > 0) {
+    console.log('enable');
+    submitTasksBtn.disabled = false;
+    submitTasksBtn.classList.add('enable');
+	} else {
+    console.log('disable')
+    submitTasksBtn.disabled = true;
+    submitTasksBtn.classList.remove('enable');
+	};
+};
+
+function checkStorage() {
+   toDoStorage.length > 0 ? prompt.classList.add('hide') : prompt.classList.remove('hide');
+}
+
 function addItem(e) {
   event.preventDefault();
   var id = Date.now();
   addTaskToObj(id);
+  checkInputFields(e);
   stageItem(id);
-  getAllTasks();
+  getAllTasks(toDoStorage);
 };
 
 function clearForm() {
   taskItemPreview.innerHTML ='';
+  menuForm.reset();
 }
 
 function stageItem(id) {
@@ -79,6 +129,7 @@ function addTaskToObj(id) {
     urgent: false,
     checked: false
   }
+  console.log(taskObj);
   taskItems.push(taskObj);
 }
 
@@ -97,6 +148,7 @@ function deleteList(e) {
     if (cardId == item.id) {
       myList.deleteFromStorage(i, toDoStorage);
     };
+    checkStorage();
   });
 };
 
@@ -135,14 +187,16 @@ function genCard(task) {
 
 }; 
  
-function getAllTasks(stringItems) {
+function getAllTasks(storage) {
   var toDoString = '';
-  for (var i = 0; i < stringItems.tasks.length; i++) {
+  for (var i = 0; i < storage.tasks.length; i++) {
     toDoString += `
-    <li class = 'listItemsAppend'>
-      <input type='image' class='card--check--icon' src='images/checkbox.svg' alt='checkbox' data-id=${stringItems.tasks.id} id ='index [i]'/>
-      <p class='typed-to-do'>${stringItems.tasks[i].content}</p>
-    </li>`
+    <div class='listItemsContainer'>
+      <li class = 'listItemsAppend'>
+        <input type='image' class='card--check--icon' src='images/checkbox.svg' alt='checkbox' data-id=${storage.tasks.id} id ='index [i]'/>
+        <p class='typed-to-do'>${storage.tasks[i].content}</p>
+      </li>
+    </div>`
   }
   return toDoString;
 } 
