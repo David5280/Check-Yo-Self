@@ -52,6 +52,13 @@ menuForm.addEventListener('click', function(e) {
   if (e.target.className === 'stage-list-delete') {
     e.preventDefault();
     e.target.closest('.aside--staged-item').remove();
+    taskItems.forEach(task => {
+    if(task.id === e.target.parentNode.id) {
+    index = taskItems.indexOf(task)
+    console.log(index);
+    taskItems.splice(index, 1);
+  }
+})
   }
   if (e.target.className === '.clearAllBtn') {
     e.preventDefault();
@@ -88,10 +95,14 @@ function checkInputFields() {
     console.log('enable');
     submitTasksBtn.disabled = false;
     submitTasksBtn.classList.add('enable');
+    clearAllBtn.disabled = false;
+    clearAllBtn.classList.add('enable');
 	} else {
     console.log('disable')
     submitTasksBtn.disabled = true;
     submitTasksBtn.classList.remove('enable');
+    clearAllBtn.disabled = true;
+    clearAllBtn.classList.remove('enable');
 	};
 };
 
