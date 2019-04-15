@@ -221,6 +221,9 @@ p {
   height: 25px;
   width: 25px;
 }
+.main--card--text {
+  font-size: 12px;
+}
 .card--check--icon {
   height: 15px;
   padding: 0px 5px;

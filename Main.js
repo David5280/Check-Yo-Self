@@ -18,7 +18,7 @@ window.addEventListener('load', retrieveList);
 function retrieveList() {
   toDoStorage = toDoStorage.map(function (oldList) {
     var restoredList = new Task(oldList.title, oldList.tasks, oldList.id, oldList.urgent);
-    genCard(restoredList);
+    trackUrgency(restoredList);
     checkStorage();
     return restoredList;
   });
@@ -59,7 +59,8 @@ menuForm.addEventListener('click', function(e) {
     taskItems.splice(index, 1);
   }
 })
-  }
+}
+
   if (e.target.className === '.clearAllBtn') {
     e.preventDefault();
     clearForm();
@@ -77,7 +78,41 @@ displayBox.addEventListener('click', function(e) {
     e.target.closest('.main--article--card').remove();
     deleteList(e);
   }
+  if (e.target.id === 'main--card--urgent-btn') {
+    updateUrgency(e); 
+  }
 });
+
+function updateUrgency(e) {
+  if (e.target.src.match('images/urgent.svg')) {
+    e.target.src = 'images/urgent-active.svg';
+    urgent = true;
+  } else {
+    e.target.src = 'images/urgent.svg'
+    urgent = false;
+  }
+  console.log('waewVGqwev', e.target.src);
+  saveUrgency(e, urgent);
+}
+
+function saveUrgency(e, urgent) {
+  toDoStorage.forEach(function(list, index) {
+    var myList = reinstantiateItems(index);
+      var cardId = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
+    if (cardId === list.id) {
+      myList.updateList(toDoStorage, index, urgent);
+    }
+  })
+};
+
+function trackUrgency(task) {
+  if (task.urgent === true) {
+    var urgentValue = 'images/urgent-active.svg';
+  } else if (task.urgent === false) {
+    urgentValue = 'images/urgent.svg'
+  } 
+  genCard(task, urgentValue);
+};
 
 function checkTaskBody() {
   if (taskBody.value !== '') {
@@ -137,7 +172,6 @@ function addTaskToObj(id) {
   var taskObj = {
     content: `${taskBody.value}`,
     id: `${id}`,
-    urgent: false,
     checked: false
   }
   console.log(taskObj);
@@ -148,8 +182,8 @@ function instantiateTask(e) {
   e.preventDefault();
   var task = new Task(taskTitle.value, taskItems, Date.now(), false);
   toDoStorage.push(task);
-  task.saveToStorage(toDoStorage); 
-  genCard(task);
+  trackUrgency(task);
+  task.saveToStorage(toDoStorage);
 }
 
 function deleteList(e) {
@@ -164,15 +198,11 @@ function deleteList(e) {
 };
 
 function reinstantiateItems(i) {
-  console.log('reinstantiate');
-  console.log(new Task(toDoStorage[i].title, toDoStorage[i].tasks, 
-  toDoStorage[i].id, toDoStorage[i].urgent));
-  return new Task(toDoStorage[i].title, toDoStorage[i].tasks, 
+   return new Task(toDoStorage[i].title, toDoStorage[i].tasks, 
     toDoStorage[i].id, toDoStorage[i].urgent);
-  
 };
 
-function genCard(task) {
+function genCard(task, urgentValue) {
   var card = `
   <article class='main--article--card' data-id=${task.id}>
     <section class='main--card--top'>
@@ -185,7 +215,7 @@ function genCard(task) {
     </section>
     <section class='main--card--bottom'>
       <div class='main--card--icon-container'>
-        <input type='image' src='images/urgent.svg' class='main--card--btn card-btn' id='main--card--urgent-btn'>
+        <input type='image' src=${urgentValue} class='main--card--btn card-btn' id='main--card--urgent-btn'>
         <p class='main--card--text'>URGENT</p>
       </div>
       <div class='main--card--icon-container'>
