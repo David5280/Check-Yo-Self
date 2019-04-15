@@ -36,6 +36,11 @@ menuForm.addEventListener('click', function(e) {
   }
   if (e.target.className === 'stage-list-delete') {
     e.target.closest('.aside--staged-item').remove();
+    
+  }
+  if (e.target.className === '.clearAllBtn') {
+    clearForm();
+    menuForm.reset();
   }
 });
 
@@ -71,52 +76,47 @@ function addTaskToObj(id) {
   var taskObj = {
     content: `${taskBody.value}`,
     id: `${id}`,
+    urgent: false,
+    checked: false
   }
   taskItems.push(taskObj);
-  console.log(taskObj);
-  console.log(taskItems);
 }
 
 function instantiateTask(e) {
   e.preventDefault();
-  var task = new Task(taskTitle.value, taskItems);
+  var task = new Task(taskTitle.value, taskItems, Date.now(), false);
   toDoStorage.push(task);
   task.saveToStorage(toDoStorage); 
   genCard(task);
 }
 
 function deleteList(e) {
-  if (e.target.id === 'main--card--delete-btn') {
-    e.target.closest('.main--article--card').remove();
-    var removedTask = new Task();
-    var targetId = parseInt(e.target.closest('.main--article--card').dataset.id);
-    removedTask.deleteFromStorage(targetId);
-  }
-};
-function reinstantiateItems(i) {
-  console.log('wtff');
-  return new Task(toDoStorage[i].title, toDoStorage[i].task, 
-  toDoStorage[i].id, toDoStorage[i].urgent);
+  toDoStorage.forEach(function(item, i) {
+    var myList = reinstantiateItems(i);
+    var cardId = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
+    if (cardId == item.id) {
+      myList.deleteFromStorage(i, toDoStorage);
+    };
+  });
 };
 
-// function addToObj(id) {
-//   var taskObj = {
-//     title: `${taskTitle.value}`,
-//     content: `${taskBody.value}`,
-//     id: `${id}`,
-//     done: false
-//   }
-//   taskItems.push(taskObj);
-// }
+function reinstantiateItems(i) {
+  console.log('reinstantiate');
+  console.log(new Task(toDoStorage[i].title, toDoStorage[i].tasks, 
+  toDoStorage[i].id, toDoStorage[i].urgent));
+  return new Task(toDoStorage[i].title, toDoStorage[i].tasks, 
+    toDoStorage[i].id, toDoStorage[i].urgent);
+  
+};
 
 function genCard(task) {
   var card = `
-  <article class='main--article--card' data-id=${task.id}'>
+  <article class='main--article--card' data-id=${task.id}>
     <section class='main--card--top'>
       <h3 class='main--card--title'>${task.title}</h3>
     </section>
     <section class='main--card--body'>
-      <ul class='main--card--list' id='main--card${task.id}'></ul>
+      <ul class='main--card--list' id='main--card${task.id}>
       ${getAllTasks(task)}
       </ul>
     </section>
@@ -139,10 +139,10 @@ function getAllTasks(stringItems) {
   var toDoString = '';
   for (var i = 0; i < stringItems.tasks.length; i++) {
     toDoString += `
-    <p class = 'listItemsAppend'>
+    <li class = 'listItemsAppend'>
       <input type='image' class='card--check--icon' src='images/checkbox.svg' alt='checkbox' data-id=${stringItems.tasks.id} id ='index [i]'/>
       <p class='typed-to-do'>${stringItems.tasks[i].content}</p>
-    </p>`
+    </li>`
   }
   return toDoString;
 } 

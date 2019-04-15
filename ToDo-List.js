@@ -8,7 +8,7 @@ class Task {
   saveToStorage(toDoStorage) {
     localStorage.setItem('list', JSON.stringify(toDoStorage));
   };
-  deleteFromStorage(index) {
+  deleteFromStorage(index, toDoStorage) {
     toDoStorage.splice(index, 1);
     this.saveToStorage(toDoStorage);
   };
