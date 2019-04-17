@@ -1,4 +1,5 @@
 var toDoStorage = JSON.parse(localStorage.getItem('list')) || [];
+console.log(toDoStorage);
 var taskItems = [];
 var searchInput = document.querySelector('#header--search')
 var taskTitle = document.querySelector('#aside--form--title');
@@ -57,7 +58,6 @@ displayBox.addEventListener('click', function(e) {
   }
   if (e.target.className === 'card--check--icon') {
     checkBox(e);
-    completeTask(e);
   }
 });
 
@@ -119,7 +119,7 @@ function getAllTasks(storage) {
     toDoString += `
     <div class='listItemsContainer'>
       <li class = 'listItemsAppend' data-id=${storage.tasks[i].id} id=${storage.tasks[i].id}>
-        <input type='image' class='card--check--icon' src='images/checkbox.svg' alt='checkbox' data-id=${storage.tasks[i].id} id ='index [i]'/>
+        <input type='image' class='card--check--icon' src='${storage.tasks[i].checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg' }' alt='checkbox' data-id=${storage.tasks[i].id} id ='index [i]'/>
         <p class='typed-to-do' id=${storage.tasks[i].id}>${storage.tasks[i].content}</p>
       </li>
     </div>`
@@ -136,7 +136,7 @@ function instantiateTask(e) {
   var task = new Task(taskTitle.value, taskItems, Date.now(), false);
   toDoStorage.push(task);
   trackUrgency(task);
-  task.saveToStorage(toDoStorage);
+  task.saveToStorage();
 }
 
 function reinstantiateItems(i) {
@@ -187,6 +187,7 @@ function clearForm() {
 function deleteList(e) {
   toDoStorage.forEach(function(item, i) {
     var myList = reinstantiateItems(i);
+    console.log(myList);
     var cardId = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
     if (cardId == item.id) {
       myList.deleteFromStorage(i, toDoStorage);
@@ -220,31 +221,35 @@ function genCard(task, urgentValue) {
   displayBox.insertAdjacentHTML('afterbegin', card);
 }; 
 
-function targetIndex(e) {
-  var targetCard = e.target.closest('.main--article--card');
-  var targetId = parseInt(targetCard.getAttribute('data-id'));
-  var taskIndex = toDoStorage.findIndex(obj => obj.id === targetId);
-  return taskIndex;
+function targetIndex(card) {
+  var cardId = card.dataset.id;
+  return toDoStorage.findIndex(obj => obj.id == cardId);
+}
+
+function targetTaskIndex(taskId, object) {
+  return object.tasks.findIndex(item => item.id == taskId);
 }
 
 function updateUrgency(e) {
+  var card = e.target.closest('.main--article--card')
+  var index = targetIndex(card);
+  toDoStorage[index].updateList()
   if (e.target.src.match('images/urgent.svg')) {
     e.target.src = 'images/urgent-active.svg';
-    urgent = true;
+    // urgent = true;
   } else {
     e.target.src = 'images/urgent.svg'
-    urgent = false;
+    // urgent = false;
   }
-  console.log(urgent);
-  saveUrgency(e, urgent);
+  saveUrgency(e);
 }
 
-function saveUrgency(e, urgent) {
+function saveUrgency(e) {
   toDoStorage.forEach(function(list, index) {
     var myList = reinstantiateItems(index);
     var cardId = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
     if (cardId === list.id) {
-      myList.updateList(toDoStorage, index, urgent);
+      myList.updateList(myList);
     }
   })
 };
@@ -259,19 +264,26 @@ function trackUrgency(task) {
 };
 
 function checkBox(e) {
+  var taskId = e.target.dataset.id;
+  var card = e.target.closest('.main--article--card')
+  var index = targetIndex(card);
+  console.log(index);
+  var object = toDoStorage[index];
+  var taskIndex = targetTaskIndex(taskId, object);
+  console.log(taskIndex);
+  object.updateToDos(taskIndex);
   if (e.target.src.match('images/checkbox.svg')) {
     e.target.src = 'images/checkbox-active.svg';
     e.target.parentNode.parentNode.checked = true;
+    targetIndex(e, taskId);
   } else {
     e.target.src = 'images/checkbox.svg'
     e.target.checked = false;
   };
 };
 
-function completeTask(e) {
-  var i = targetIndex(e);
-  var counter = 0;
-  toDoStorage[i].tasks.forEach(function(task) {
-    task.done ? counter++ : counter--;
-  })
-};
+function checkListItem(taskIndex, taskId) {
+  var object = toDoStorage[taskIndex];
+  var specificTask = object.tasks.findIndex(obj => obj.id === taskId);
+  object.updateList(taskIndex, specificTask);
+ }

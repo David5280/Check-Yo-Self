@@ -6,16 +6,20 @@ class Task {
     this.urgent = urgent;
     this.done = done || false;
   };
-  saveToStorage(toDoStorage) {
+  saveToStorage() {
     localStorage.setItem('list', JSON.stringify(toDoStorage));
   };
-  deleteFromStorage(index, toDoStorage) {
+  deleteFromStorage(index) {
     toDoStorage.splice(index, 1);
-    this.saveToStorage(toDoStorage);
+    this.saveToStorage();
   };
-  updateList(toDoStorage, index, urgent) {
-    urgent ? toDoStorage[index].urgent = true : toDoStorage[index].urgent = false;
-    this.saveToStorage(toDoStorage);
+  updateList() {
+    this.urgent = !this.urgent
+    this.saveToStorage();
   };
+  updateToDos(taskIndex) {
+    this.tasks[taskIndex].checked = !this.tasks[taskIndex].checked;
+    this.saveToStorage();
+  }
 };
 
