@@ -75,10 +75,10 @@ displayBox.addEventListener('click', function(e) {
 function addItem() {
   var id = Date.now();
   addTaskToObj(id);
-  checkInputFields();
   stageItem(id);
-  getAllTasks(id);
+  checkInputFields();
   clearTaskItemInput();
+  getAllTasks(id);
 };
 
 function addTaskToObj(id) {
@@ -126,6 +126,10 @@ function getAllTasks(storage) {
   }
   return toDoString;
 } 
+
+function clearTaskItemInput() {
+  taskBody.value = '';
+}
 
 function instantiateTask(e) {
   e.preventDefault();

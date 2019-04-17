@@ -35,15 +35,15 @@ h1 {
   color: #FEC200;
 }
 #header--search {
-  border-left: none;
   border: 1px solid black;
+  border-left: none;
   height: 30px;
   width: 85%;
 }
 #header--search-icon {
-  background-color: #ffffff;
-  border-right: none;
+  background-color: #D3D3D3;
   border: 1px solid black;
+  border-right: none;
   height: 30px;
   width: 15%;
 }
@@ -186,6 +186,7 @@ p {
   display: flex;
   flex-direction: column;
   min-width: 30%;
+  max-width: 50%;
   margin: 10px 10px;
 }
 .main--card--title {
