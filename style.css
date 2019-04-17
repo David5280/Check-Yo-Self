@@ -24,12 +24,11 @@ header {
   grid-row-end: 2;
   grid-row-start: 1;
   justify-content: space-between;
-  padding: 10px;
+  padding: 5px;
 }
 h1 {
   color: #FEFEFE;
-  font-size: 32px;
-  margin-left: 5px;
+  font-size: 35px;
 }
 .header--h1-accent {
   color: #FEC200;
@@ -37,19 +36,19 @@ h1 {
 #header--search {
   border: 1px solid black;
   border-left: none;
-  height: 30px;
+  height: 40px;
   width: 85%;
 }
 #header--search-icon {
   background-color: #D3D3D3;
   border: 1px solid black;
   border-right: none;
-  height: 30px;
+  height: 40px;
   width: 15%;
 }
 #header--search-container {
   display: flex;
-  height: 30px;
+  height: 40px;
   margin-right: 10px;
   width: 25%;
 }
@@ -291,7 +290,7 @@ p {
   }
   #header--search-container {
     margin: 0px;
-    width: 50%;
+    width: 95%;
   }
   h1 {
     font-size: 24px;
