@@ -71,7 +71,7 @@ aside {
   width: 100%;
 }
 .aside-button {
-  background-color: #47869A;
+  background-color: #D3D3D3;
   color: white;
   font-weight: bold;
   border: 2px solid rgb(0, 0, 0);
@@ -146,7 +146,7 @@ aside {
   width: 90%;
 }
 main {
-  background-color: #f3f6f7;
+  background-color: #D3D3D3;
   grid-column-end: 3;
   grid-column-start: 2;
   overflow: auto;
@@ -182,6 +182,7 @@ p {
   flex-direction: row;
 }
 .main--article--card {
+  background-color: #f3f6f7;
   border: 2px solid;
   display: flex;
   flex-direction: column;
