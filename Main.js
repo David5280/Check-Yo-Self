@@ -78,6 +78,7 @@ function addItem() {
   checkInputFields();
   stageItem(id);
   getAllTasks(id);
+  clearTaskItemInput();
 };
 
 function addTaskToObj(id) {
@@ -86,19 +87,16 @@ function addTaskToObj(id) {
     id: `${id}`,
     checked: false
   }
-  console.log(taskObj);
   taskItems.push(taskObj);
 };
 
 function checkInputFields() {
 	if (taskTitle.value !== '' && taskItems.length > 0) {
-    console.log('enable');
     submitTasksBtn.disabled = false;
     submitTasksBtn.classList.add('enable');
     clearAllBtn.disabled = false;
     clearAllBtn.classList.add('enable');
 	  } else {
-    console.log('disable')
     submitTasksBtn.disabled = true;
     submitTasksBtn.classList.remove('enable');
     clearAllBtn.disabled = true;
@@ -132,7 +130,6 @@ function getAllTasks(storage) {
 function instantiateTask(e) {
   e.preventDefault();
   var task = new Task(taskTitle.value, taskItems, Date.now(), false);
-  console.log(task);
   toDoStorage.push(task);
   trackUrgency(task);
   task.saveToStorage(toDoStorage);
@@ -160,7 +157,6 @@ function deleteStagedItems(e) {
   taskItems.forEach(task => {
   if(task.id === e.target.parentNode.id) {
   index = taskItems.indexOf(task)
-  console.log(index);
   taskItems.splice(index, 1);
   }
 });
@@ -261,13 +257,11 @@ function trackUrgency(task) {
 function checkBox(e) {
   if (e.target.src.match('images/checkbox.svg')) {
     e.target.src = 'images/checkbox-active.svg';
-    console.log(e.target.parentNode)
     e.target.parentNode.parentNode.checked = true;
   } else {
     e.target.src = 'images/checkbox.svg'
     e.target.checked = false;
   };
-  saveChecked(e)
 };
 
 function completeTask(e) {
