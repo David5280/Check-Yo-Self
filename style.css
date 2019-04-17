@@ -145,7 +145,7 @@ aside {
   width: 90%;
 }
 main {
-  background-color: #D3D3D3;
+  background-color: #F2F6F7;
   grid-column-end: 3;
   grid-column-start: 2;
   overflow: auto;
