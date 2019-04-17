@@ -1,22 +1,20 @@
 class Task {
-  constructor(title, task, id, urgent) {
+  constructor(title, task, id, urgent, done) {
     this.title = title;
     this.tasks = task || [];
     this.id = id;
-    this.urgent = urgent || false;
+    this.urgent = urgent;
+    this.done = done || false;
   };
-
   saveToStorage(toDoStorage) {
     localStorage.setItem('list', JSON.stringify(toDoStorage));
   };
-
-  deleteFromStorage(index) {
+  deleteFromStorage(index, toDoStorage) {
     toDoStorage.splice(index, 1);
     this.saveToStorage(toDoStorage);
   };
-
-  updateIdea(toDoStorage, index, star) {
-    star ? toDoStorage[index].star = true : toDoStorage[index].star = false;
+  updateList(toDoStorage, index, urgent) {
+    urgent ? toDoStorage[index].urgent = true : toDoStorage[index].urgent = false;
     this.saveToStorage(toDoStorage);
   };
 };
