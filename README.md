@@ -6,6 +6,12 @@ Check-Yo-Self is a final solo project at the Turing School of Software & Design,
 
 ## My Project
 
+![desktop view](https://github.com/David5280/Check-Yo-Self/blob/master/images/CheckYoSelf%20Screenshot.png)
+![mobile view](https://github.com/David5280/Check-Yo-Self/blob/master/images/CheckYoSelf%20Screenshot2.png)
+
 ## Static Comp
+
+![desktop view](https://github.com/David5280/Check-Yo-Self/blob/master/images/StaticComp.jpg)
+![mobile view](https://github.com/David5280/Check-Yo-Self/blob/master/images/StaticCompMobile.jpg)
 
 
