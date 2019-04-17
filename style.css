@@ -24,19 +24,34 @@ header {
   justify-content: space-between;
   align-items: center;
   background-color: #0B0F43;
+  padding: 10px;
 }
 h1 {
   color: #FEFEFE;
   font-size: 34px;
   margin-left: 10px;
 }
-#header--search {
-  margin-right: 15px;
-  width: 25%;
-  height: 50px;
-}
 .header--h1-accent {
   color: #FEC200;
+}
+#header--search {
+  width: 85%;
+  height: 30px;
+  border: 1px solid black;
+  border-left: none;
+}
+#header--search-icon {
+  height: 30px;
+  width: 15%;
+  background-color: #ffffff;
+  border: 1px solid black;
+  border-right: none;
+}
+#header--search-container {
+  height: 30px;
+  width: 25%;
+  display: flex;
+  margin-right: 10px;
 }
 aside {
   color: #ffffff;
@@ -272,10 +287,9 @@ p {
     align-items: center;
     background-color: #0B0F43;
   }
-  #header--search {
+  #header--search-container {
     width: 50%;
-    height: 25px;
-    margin: auto;
+    margin: 0px;
   }
   h1 {
     font-size: 24px;
