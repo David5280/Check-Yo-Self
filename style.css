@@ -6,69 +6,69 @@ HTML {
   font-family: "open sans", sans-serif; 
 }
 body {
-  height: 100%;
-  width: 100%;
-  margin: 0px;
-	padding: 0px;
   display: grid;
   grid-template-columns: 25% 75%;
   grid-template-rows: 10% 90%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
 }
 header {
-  border: 1px solid;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  grid-row-end: 2;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: #0B0F43;
+  border: 1px solid;
+  display: flex;
+  grid-column-end: 5;
+  grid-column-start: 1;
+  grid-row-end: 2;
+  grid-row-start: 1;
+  justify-content: space-between;
   padding: 10px;
 }
 h1 {
   color: #FEFEFE;
-  font-size: 34px;
-  margin-left: 10px;
+  font-size: 32px;
+  margin-left: 5px;
 }
 .header--h1-accent {
   color: #FEC200;
 }
 #header--search {
-  width: 85%;
-  height: 30px;
-  border: 1px solid black;
   border-left: none;
+  border: 1px solid black;
+  height: 30px;
+  width: 85%;
 }
 #header--search-icon {
+  background-color: #ffffff;
+  border-right: none;
+  border: 1px solid black;
   height: 30px;
   width: 15%;
-  background-color: #ffffff;
-  border: 1px solid black;
-  border-right: none;
 }
 #header--search-container {
-  height: 30px;
-  width: 25%;
   display: flex;
+  height: 30px;
   margin-right: 10px;
+  width: 25%;
 }
 aside {
+  align-items: center;
+  background-color: #47869A;
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  grid-column-start: 1;
   grid-column-end: 2;
-  background-color: #47869A;
+  grid-column-start: 1;
+  grid-row-end: 3;
+  grid-row-start: 2;
 }
 .aside-item {
-  width: 100%;
-  height: 45px;
-  font-size: 16px;
   border: 2px solid #0B0F43;
+  font-size: 16px;
+  height: 45px;
+  width: 100%;
 }
 .aside-button {
   background-color: #47869A;
@@ -87,17 +87,17 @@ aside {
   background-color: #0B0F43;
 }
 #aside--form--container1 {
-  margin-top: 15px;
   display: flex;
   flex-direction: column;
+  margin-top: 15px;
   min-height: 60px;
 }
 #aside--form--container3 {
-  display: flex;
   align-items: flex-start;
+  display: flex;
   height: 45px;
-  width: 100%;
   margin-top: auto;
+  width: 100%;
 }
 .aside--form--submit-btn {
   height: 45px;
@@ -109,19 +109,19 @@ aside {
   height: 60px;
 }
 #aside--staging {
-  width: 100%;
-  min-height: 10px;
-  max-height: 350px;
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
+  flex-wrap: wrap;
   list-style: none;
+  max-height: 350px;
+  min-height: 10px;
   overflow: auto;
+  width: 100%;
 }
 .stage-content {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 .aside--staged-item {
   display: flex;
@@ -130,42 +130,42 @@ aside {
   padding: 5px 0;
 }
 .stage-list-delete {
-  height: 25px;
   align-self: center;
+  height: 25px;
 }
 #aside-form {
+  border-bottom: 1px solid #0B0F43;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   min-height: 400px;
   width: 90%;
-  border-bottom: 1px solid #0B0F43;
 }
 #aside--urgency-btn {
-  width: 90%;
   margin: 35px 0px;
+  width: 90%;
 }
 main {
-  grid-column-start: 2;
-  grid-column-end: 3;
   background-color: #f3f6f7;
-  padding: 10px;
+  grid-column-end: 3;
+  grid-column-start: 2;
   overflow: auto;
+  padding: 10px;
 }
 .initialPrompt {
   margin: auto;
 }
 #main--card-display {
+  align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
 }
 .main--card--urgent {
   width: 20%;
 }
 ul {
-  padding: 0px;
   margin: 0px;
+  padding: 0px;
 }
 h3 {
   margin: 0px;
@@ -174,8 +174,8 @@ p {
   margin: 0px;
 }
 .main--card--list {
-  width: 100%;
   flex-wrap: wrap;
+  width: 100%;
 }
 .listItemsAppend {
   display: flex;
@@ -183,37 +183,37 @@ p {
 }
 .main--article--card {
   border: 2px solid;
-	margin: 10px 10px;
-  min-width: 30%;
   display: flex;
   flex-direction: column;
+  min-width: 30%;
+  margin: 10px 10px;
 }
 .main--card--title {
-  grid-row-start: 1;
-  grid-row-end: 2;
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid;
 	height: 50px;
-  justify-self: flex-start;
   align-items: center;
-  width: 100%;
+  border-bottom: 1px solid;
+  display: flex;
+  grid-row-end: 2;
+  grid-row-start: 1;
+  justify-content: center;
+  justify-self: flex-start;
   margin-bottom: auto;
+  width: 100%;
 }
 .main--card--body {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: flex-end;
   min-height: 100px;
 }
 .main--card--bottom {
+  align-items: center;
   border-top: 1px solid;
-  height: 50px;
   display: flex;
   flex-direction: row;
+  height: 50px;
   justify-content: space-between;
-  align-items: center;
   margin-top: auto;
 }
 .typed-to-do {
@@ -222,9 +222,9 @@ p {
   min-width: 50%;
 }
 .main--card--icon-container {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   margin: 0 10px;
 }
@@ -243,11 +243,11 @@ p {
   background-color: #0B0F43;
 }
 .listItemsAppend {
-  width: 100%;
-  list-style: none;
-  display: flex;
   align-items: center;
+  display: flex;
+  list-style: none;
   padding: 5px;
+  width: 100%;
 }
 .hide {
   display: none;
@@ -261,8 +261,8 @@ p {
     flex-direction: column;
   }
   #main--card-display {
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
     height: 100%;
   }
   .main--article--card {
@@ -274,31 +274,31 @@ p {
 } 
 @media only screen and (max-width: 445px) {
   body {
+    display: flex;
+    flex-direction: column;
     margin: 0px;
     padding: 0px;
-    display: flex;
-    flex-direction: column;
   }
   header {
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     background-color: #0B0F43;
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    justify-content: center;
   }
   #header--search-container {
-    width: 50%;
     margin: 0px;
+    width: 50%;
   }
   h1 {
     font-size: 24px;
     margin: auto;
   }
   .main--article--card {
-    margin: 10px 0px;
-    width: 80%;
     display: flex;
     flex-direction: column;
+    margin: 10px 0px;
+    width: 80%;
   }
 }
