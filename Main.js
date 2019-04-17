@@ -15,15 +15,6 @@ var prompt = document.querySelector('.initialPrompt');
 
 window.addEventListener('load', retrieveList);
 
-function retrieveList() {
-  toDoStorage = toDoStorage.map(function (oldList) {
-    var restoredList = new Task(oldList.title, oldList.tasks, oldList.id, oldList.urgent);
-    trackUrgency(restoredList);
-    checkStorage();
-    return restoredList;
-  });
-};
-
 // Event Delegation
 
 menuForm.addEventListener('keyup', function(e) {
@@ -71,6 +62,15 @@ displayBox.addEventListener('click', function(e) {
 });
 
 // Functions
+
+function retrieveList() {
+  toDoStorage = toDoStorage.map(function (oldList) {
+    var restoredList = new Task(oldList.title, oldList.tasks, oldList.id, oldList.urgent);
+    trackUrgency(restoredList);
+    checkStorage();
+    return restoredList;
+  });
+};
 
 function addItem() {
   var id = Date.now();
