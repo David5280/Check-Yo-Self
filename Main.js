@@ -54,7 +54,7 @@ displayBox.addEventListener('click', function(e) {
   if (e.target.id === 'main--card--urgent-btn') {
     updateUrgency(e); 
   }
-  if (e.target.className === 'card--check--icon') {
+  if (e.target.className.includes('card--check--icon')) {
     checkBox(e);
     toggleCardDeleteBtn(e);
   }
@@ -128,7 +128,7 @@ function getAllTasks(storage) {
     <div class='listItemsContainer'>
       <li class = 'listItemsAppend' data-id=${storage.tasks[i].id} id=${storage.tasks[i].id}>
         <input type='image' class='card--check--icon' src='${storage.tasks[i].checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg' }' alt='checkbox' data-id=${storage.tasks[i].id} id ='index [i]'/>
-        <p class='typed-to-do' id=${storage.tasks[i].id}>${storage.tasks[i].content}</p>
+        <p class='typed-to-do ${storage.tasks[i].checked ? 'checked' : null} card--check--icon' id=${storage.tasks[i].id}>${storage.tasks[i].content} </p>
       </li>
     </div>`
   }
@@ -137,7 +137,7 @@ function getAllTasks(storage) {
 
 function clearTaskItemInput() {
   taskBody.value = '';
-}
+};
 
 function instantiateTask(e) {
   e.preventDefault();
@@ -145,7 +145,7 @@ function instantiateTask(e) {
   toDoStorage.push(task);
   trackUrgency(task);
   task.saveToStorage();
-}
+};
 
 function reinstantiateItems(i) {
   return new Task(toDoStorage[i].title, toDoStorage[i].tasks, 
@@ -162,7 +162,7 @@ function deleteStagedItems(e) {
   }
   checkInputFields();
 });
-}
+};
 
 function makeTaskListFunc(e) {
   e.preventDefault();
@@ -171,16 +171,16 @@ function makeTaskListFunc(e) {
   taskItems = [];
   clearForm();
   checkStorage();
-}
+};
 
 function checkStorage() {
    toDoStorage.length > 0 ? prompt.classList.add('hide') : prompt.classList.remove('hide');
-}
+};
 
 function clearForm() {
   taskItemPreview.innerHTML ='';
   menuForm.reset();
-}
+};
 
 function deleteList(e) {
   e.target.closest('.main--article--card').remove();
@@ -222,11 +222,11 @@ function genCard(task, urgentValue) {
 function targetIndex(card) {
   var cardId = (parseInt(card.dataset.id));
   return toDoStorage.findIndex(obj => obj.id == cardId);
-}
+};
 
 function targetTaskIndex(taskId, object) {
   return object.tasks.findIndex(item => item.id == taskId);
-}
+};
 
 function updateUrgency(e) {
   var card = e.target.closest('.main--article--card')
@@ -239,7 +239,7 @@ function updateUrgency(e) {
   }
   toggleUrgentClass(e);
   saveUrgency(e);
-}
+};
 
 function saveUrgency(e) {
   toDoStorage.forEach(function(list, index) {
@@ -247,8 +247,8 @@ function saveUrgency(e) {
     var cardId = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
     if (cardId === list.id) {
       myList.updateList(myList);
-    }
-  })
+    };
+  });
 };
 
 function trackUrgency(task) {
@@ -266,6 +266,7 @@ function toggleUrgentClass(e) {
 };
 
 function checkBox(e) {
+  console.log(e)
   var taskId = e.target.dataset.id;
   var card = e.target.closest('.main--article--card')
   var index = targetIndex(card);
@@ -275,9 +276,11 @@ function checkBox(e) {
   if (e.target.src.match('images/checkbox.svg')) {
     e.target.src = 'images/checkbox-active.svg';
     e.target.parentNode.parentNode.checked = true;
+    e.target.parentNode.childNodes[3].classList.add('checked');
   } else {
     e.target.src = 'images/checkbox.svg'
     e.target.checked = false;
+    e.target.parentNode.childNodes[3].classList.remove('checked');
   };
   toggleCardDeleteBtn(e);
 };
