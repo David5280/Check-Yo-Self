@@ -1,5 +1,4 @@
 var toDoStorage = JSON.parse(localStorage.getItem('list')) || [];
-console.log(toDoStorage);
 var taskItems = [];
 var searchInput = document.querySelector('#header--search')
 var taskTitle = document.querySelector('#aside--form--title');
@@ -50,14 +49,14 @@ menuForm.addEventListener('click', function(e) {
 
 displayBox.addEventListener('click', function(e) {
   if (e.target.id === 'main--card--delete-btn') {
-    e.target.closest('.main--article--card').remove();
     deleteList(e);
   }
   if (e.target.id === 'main--card--urgent-btn') {
     updateUrgency(e); 
   }
-  if (e.target.className === 'card--check--icon') {
+  if (e.target.className.includes('card--check--icon')) {
     checkBox(e);
+    toggleCardDeleteBtn(e);
   }
 });
 
@@ -104,6 +103,15 @@ function checkInputFields() {
 	};
 };
 
+function checkTaskBody() {
+  if (taskBody.value !== '') {
+    taskSubmitBtn.disabled = false;
+  }
+  if (taskBody.value === '') {
+    taskSubmitBtn.disabled = true;
+  };
+};
+
 function stageItem(id) {
   var listItem = `
   <li class='aside--staged-item' data-id='${id}' id='${id}'>
@@ -120,7 +128,7 @@ function getAllTasks(storage) {
     <div class='listItemsContainer'>
       <li class = 'listItemsAppend' data-id=${storage.tasks[i].id} id=${storage.tasks[i].id}>
         <input type='image' class='card--check--icon' src='${storage.tasks[i].checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg' }' alt='checkbox' data-id=${storage.tasks[i].id} id ='index [i]'/>
-        <p class='typed-to-do' id=${storage.tasks[i].id}>${storage.tasks[i].content}</p>
+        <p class='typed-to-do ${storage.tasks[i].checked ? 'checked' : null} card--check--icon' id=${storage.tasks[i].id}>${storage.tasks[i].content} </p>
       </li>
     </div>`
   }
@@ -129,7 +137,7 @@ function getAllTasks(storage) {
 
 function clearTaskItemInput() {
   taskBody.value = '';
-}
+};
 
 function instantiateTask(e) {
   e.preventDefault();
@@ -137,23 +145,12 @@ function instantiateTask(e) {
   toDoStorage.push(task);
   trackUrgency(task);
   task.saveToStorage();
-}
+};
 
 function reinstantiateItems(i) {
   return new Task(toDoStorage[i].title, toDoStorage[i].tasks, 
    toDoStorage[i].id, toDoStorage[i].urgent);
 };
-
-function checkTaskBody() {
-  if (taskBody.value !== '') {
-    taskSubmitBtn.disabled = false;
-    // taskSubmitBtn.classList.add('enable');
-  }
-  if (taskBody.value === '') {
-    taskSubmitBtn.disabled = true;
-    // taskSubmitBtn.classList.remove('enable'); 
-  }
-}
 
 function deleteStagedItems(e) {
   e.preventDefault();
@@ -163,31 +160,32 @@ function deleteStagedItems(e) {
   index = taskItems.indexOf(task)
   taskItems.splice(index, 1);
   }
+  checkInputFields();
 });
-}
+};
 
 function makeTaskListFunc(e) {
   e.preventDefault();
+  checkInputFields(e);
   instantiateTask(e);
   taskItems = [];
-  checkInputFields(e);
   clearForm();
   checkStorage();
-}
+};
 
 function checkStorage() {
    toDoStorage.length > 0 ? prompt.classList.add('hide') : prompt.classList.remove('hide');
-}
+};
 
 function clearForm() {
   taskItemPreview.innerHTML ='';
   menuForm.reset();
-}
+};
 
 function deleteList(e) {
+  e.target.closest('.main--article--card').remove();
   toDoStorage.forEach(function(item, i) {
     var myList = reinstantiateItems(i);
-    console.log(myList);
     var cardId = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
     if (cardId == item.id) {
       myList.deleteFromStorage(i, toDoStorage);
@@ -198,7 +196,7 @@ function deleteList(e) {
 
 function genCard(task, urgentValue) {
   var card = `
-  <article class='main--article--card' data-id=${task.id}>
+  <article class='main--article--card ${task.urgent === true ? 'urgent' : null}' data-id=${task.id}>
     <section class='main--card--top'>
       <h3 class='main--card--title'>${task.title}</h3>
     </section>
@@ -213,7 +211,7 @@ function genCard(task, urgentValue) {
         <p class='main--card--text'>URGENT</p>
       </div>
       <div class='main--card--icon-container'>
-        <input type='image' src='images/delete.svg' class='main--card--btn card-btn' id='main--card--delete-btn'>
+        <input type='image' src='images/delete.svg' class='main--card--btn card-btn' id='main--card--delete-btn' disabled>
         <p class='main--card--text'>DELETE</p>
       </div>
     </section>
@@ -222,13 +220,13 @@ function genCard(task, urgentValue) {
 }; 
 
 function targetIndex(card) {
-  var cardId = card.dataset.id;
+  var cardId = (parseInt(card.dataset.id));
   return toDoStorage.findIndex(obj => obj.id == cardId);
-}
+};
 
 function targetTaskIndex(taskId, object) {
   return object.tasks.findIndex(item => item.id == taskId);
-}
+};
 
 function updateUrgency(e) {
   var card = e.target.closest('.main--article--card')
@@ -236,13 +234,12 @@ function updateUrgency(e) {
   toDoStorage[index].updateList()
   if (e.target.src.match('images/urgent.svg')) {
     e.target.src = 'images/urgent-active.svg';
-    // urgent = true;
   } else {
     e.target.src = 'images/urgent.svg'
-    // urgent = false;
   }
+  toggleUrgentClass(e);
   saveUrgency(e);
-}
+};
 
 function saveUrgency(e) {
   toDoStorage.forEach(function(list, index) {
@@ -250,8 +247,8 @@ function saveUrgency(e) {
     var cardId = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
     if (cardId === list.id) {
       myList.updateList(myList);
-    }
-  })
+    };
+  });
 };
 
 function trackUrgency(task) {
@@ -263,27 +260,42 @@ function trackUrgency(task) {
   genCard(task, urgentValue);
 };
 
+function toggleUrgentClass(e) {
+  var targetCard = e.target.closest('article'); 
+  targetCard.classList.toggle('urgent');
+};
+
 function checkBox(e) {
+  console.log(e)
   var taskId = e.target.dataset.id;
   var card = e.target.closest('.main--article--card')
   var index = targetIndex(card);
-  console.log(index);
   var object = toDoStorage[index];
   var taskIndex = targetTaskIndex(taskId, object);
-  console.log(taskIndex);
   object.updateToDos(taskIndex);
   if (e.target.src.match('images/checkbox.svg')) {
     e.target.src = 'images/checkbox-active.svg';
     e.target.parentNode.parentNode.checked = true;
-    targetIndex(e, taskId);
+    e.target.parentNode.childNodes[3].classList.add('checked');
   } else {
     e.target.src = 'images/checkbox.svg'
     e.target.checked = false;
+    e.target.parentNode.childNodes[3].classList.remove('checked');
   };
+  toggleCardDeleteBtn(e);
 };
 
-function checkListItem(taskIndex, taskId) {
-  var object = toDoStorage[taskIndex];
-  var specificTask = object.tasks.findIndex(obj => obj.id === taskId);
-  object.updateList(taskIndex, specificTask);
- }
+function toggleCardDeleteBtn(e) {
+  var card = e.target.closest('.main--article--card')
+  var cardDeleteBtn = document.querySelector('#main--card--delete-btn')
+  var index = targetIndex(card);
+  var object = toDoStorage[index];
+  var lengthOfToDo = object.tasks.length
+  var toDoTaskArray = object.tasks.filter(task => task.checked); 
+  var numOfCheckedTasks = toDoTaskArray.length
+  if (lengthOfToDo === numOfCheckedTasks) {
+    cardDeleteBtn.disabled = false;
+  } else {
+    cardDeleteBtn.disabled = true;
+  };
+};
